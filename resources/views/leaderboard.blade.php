@@ -3,7 +3,7 @@
 @section('content')
 
 <table>
-
+salam
 </table>
 
 @endsection

@@ -2,60 +2,41 @@
 
 @section('content')
 
-<a class="top-right-corner red-btn" href="{{ route('home') }}">Back ></a>
-
-<div>
-    <div>
-        <p class="title form-header">Register form</p>
-    </div>
-
-    <form action="{{ route('register') }}" method="POST">
+<div class="register-container">
+    <form action="{{ route('register') }}" method="POST" class="register-card" id="register-form" >
         @csrf
-
-        <div class="mb4">
-            <input class="center auth-input" type="text" name="username" id="username" placeholder="Enter username" value="{{ old('username')}}">
-
+        <h1>Register</h1>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="username or email" required/>
+        <span class="error" id="register-error">
             @error('username')
-            <div class="error-msg mt2 center">
-                {{ $message }}
-            </div>
+            {{ $message }}
             @enderror
-        </div>
-
-        <div class="mb4">
-            <input class="center auth-input" type="text" name="email" id="email" placeholder="Enter email" value="{{ old('email')}}">
-
+        </span>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="email" required/>
+        <span class="error" id="register-error">
             @error('email')
-            <div class="error-msg mt2 center">
-                {{ $message }}
-            </div>
+            {{ $message }}
             @enderror
-        </div>
-
-        <div class="mb4">
-            <input class="center auth-input" type="password" name="password" id="password" placeholder="Enter password">
-
+        </span>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="password" required/>
+        <span class="error" id="register-error">
             @error('password')
-            <div class=" error-msg mt2 center">
-                {{ $message }}
-            </div>
+            {{ $message }}
             @enderror
-        </div>
-
-        <div class="mb4">
-            <input class="center auth-input" type="password" name="password_confirmation" id="password_confirmation" placeholder="Enter password confirmation">
-
+        </span>
+        <label for="password_confirmation">Password confirmation</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="password confirmation" required/>
+        <span class="error" id="register-error">
             @error('password_confirmation')
-            <div class="error-msg mt2 center">
-                {{ $message }}
-            </div>
+            {{ $message }}
             @enderror
-        </div>
-
-        <button class="center green-btn mb4" style="cursor: pointer;" type="submit">Register</button>
-
-        <a class="center simple-link" href="{{ route('login') }}">Already have an account? Login</a>
+        </span>
+        <button id="register-button" class="btn">Register <i class="fa-solid fa-right-to-bracket"></i></button>
+        <a class="" href="{{ route('login') }}">Already have an account? Login</a>
     </form>
-</div>
+  </div>
 
 @endsection
