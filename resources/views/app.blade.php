@@ -10,6 +10,26 @@
 </head>
 
 <body>
+    <nav>
+        <a class="btn" href="{{ route('leaderboard') }}">Leaderboard</a>
+
+        <div style="display: flex;gap: 30px">
+            @auth
+                <a class="btn" href="{{ route('profile') }}">{{ auth()->user()->username }}</a>
+            @endauth
+
+            @guest
+                <a class="btn" href="{{ route('login') }}">Login</a>
+
+            @endguest
+
+
+            @auth
+                <a class="btn" href="{{ route('logout') }}">Logout</a>
+            @endauth
+        </div>
+    </nav>
+
     @yield('content')
 </body>
 
