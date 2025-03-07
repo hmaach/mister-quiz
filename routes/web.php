@@ -22,22 +22,25 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store']);
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
+});
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', function () {
+        return "salam ana profile";
+    })->name('profile');
 
-Route::get('/profile', function () {
-    return "salam ana profile";
-})->name('profile');
-
-Route::get('/quiz', function () {
-    return "salam ana quiz";
-})->name('quiz');
-Route::get('/leaderboard', function () {
-    return "salam ana leaderboard";
-})->name('leaderboard');
+    Route::get('/quiz', function () {
+        return "salam ana quiz";
+    })->name('quiz');
+    Route::get('/leaderboard', function () {
+        return "salam ana leaderboard";
+    })->name('leaderboard');
+});

@@ -25,7 +25,10 @@
 
 
             @auth
-                <a class="btn" href="{{ route('logout') }}">Logout</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn" href="">Logout</button>
+                </form>
             @endauth
         </div>
     </nav>

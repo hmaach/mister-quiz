@@ -7,7 +7,7 @@
         @csrf
         <h1>Register</h1>
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" placeholder="username or email" required/>
+        <input type="text" name="username" id="username" placeholder="username" required/>
         <span class="error" id="register-error">
             @error('username')
             {{ $message }}
