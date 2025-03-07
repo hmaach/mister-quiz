@@ -37,9 +37,8 @@ Route::middleware(['auth'])->group(function () {
         return "salam ana profile";
     })->name('profile');
 
-    Route::get('/quiz', function () {
-        return "salam ana quiz";
-    })->name('quiz');
+    Route::get('/quiz', [QuestionController::class, 'index'])->name('quiz');
+    Route::post('/results', [QuestionController::class, 'results'])->name('quiz.submit');
     Route::get('/leaderboard', function () {
         return "salam ana leaderboard";
     })->name('leaderboard');

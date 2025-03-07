@@ -2,17 +2,22 @@
 
 @section('content')
 
-<form action="{{ route('quiz', $quiz) }}" method="post">
-    @csrf
+<div class="quiz-container">
+    <h1 class="quiz-title">Take the Quiz</h1>
 
-    @if ($quiz)
-    @foreach ($quiz['questions'] as $question)
-    <x-question :question="$question" />
-    @endforeach
-    @endif
+    <form action="{{ route('quiz.submit') }}" method="post" class="quiz-form">
+        @csrf
 
-    <button type="submit" class="center green-btn">Submit</button>
-</form>
+        @if (!empty($quiz['questions']))
+            @foreach ($quiz['questions'] as $question)
+                <x-question :question="$question" />
+            @endforeach
+        @else
+            <p class="no-questions">No questions available.</p>
+        @endif
 
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
 
 @endsection
