@@ -111,13 +111,10 @@ class QuestionController extends Controller
             }
         }
 
-        // Update user XP
         $user->xp += $xp;
 
-        // Update category scores
         foreach ($results as $category => $correctAnswers) {
             if ($category !== 'overall') {
-                // Retrieve current category score (e.g., "2/10")
                 [$correct, $total] = explode("/", $user[$category] ?? "0/0");
 
                 // Update with new values

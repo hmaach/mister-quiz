@@ -33,13 +33,9 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', function () {
-        return "salam ana profile";
-    })->name('profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
     Route::get('/quiz', [QuestionController::class, 'index'])->name('quiz');
     Route::post('/results', [QuestionController::class, 'results'])->name('quiz.submit');
-    Route::get('/leaderboard', function () {
-        return "salam ana leaderboard";
-    })->name('leaderboard');
+    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 });
