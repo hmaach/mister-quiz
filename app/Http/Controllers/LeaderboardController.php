@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 
 class LeaderboardController extends Controller
@@ -15,7 +14,7 @@ class LeaderboardController extends Controller
         // Calculate total correct answers for each user
         foreach ($topPlayers as $player) {
             $player->total_correct = collect(['art', 'geography', 'history', 'science', 'sports'])
-                ->sum(fn($category) => explode("/", $player->$category)[0]);
+                ->sum(fn($category) => isset($player->$category) ? (int) explode("/", $player->$category)[0] : 0);
         }
 
         return view('leaderboard', compact('topPlayers'));

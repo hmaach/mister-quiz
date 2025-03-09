@@ -19,15 +19,15 @@ class RegisterController extends Controller
     {
         //validate
         $this->validate($request, [
-            'username' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|confirmed'
+            'username' => 'required|max:20|unique:users,username',
+            'email' => 'required|email|max:100|unique:users,email',
+            'password' => 'required|confirmed|min:5'
         ]);
 
         //store user
         User::create([
-            'username' => $request->username,
-            'email' => $request->email,
+            'username' => trim($request->username),
+            'email' => strtolower(trim($request->email)),
             'password' => Hash::make($request->password)
         ]);
 

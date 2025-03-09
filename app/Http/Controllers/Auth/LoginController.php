@@ -22,7 +22,7 @@ class LoginController extends Controller
         ]);
 
         // Attempt to log the user in
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => strtolower($request->email), 'password' => $request->password])) {
             return redirect()->intended(route('home'))->with('message', 'You are logged in!');
         }
 

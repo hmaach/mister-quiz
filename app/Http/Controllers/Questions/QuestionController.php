@@ -13,7 +13,6 @@ class QuestionController extends Controller
 {
     public function index(Request $request)
     {
-        // Check if the user is authenticated
         if ($request->user()) {
             if (!session()->has('quiz_questions')) {
                 $categories = ['History', 'Art', 'Geography', 'Science', 'Sports'];
@@ -45,10 +44,8 @@ class QuestionController extends Controller
 
                 shuffle($questions);
 
-                // Store the questions in the session
                 session(['quiz_questions' => $questions]);
             } else {
-                // Use the questions already in the session
                 $questions = session('quiz_questions');
             }
 
@@ -57,14 +54,13 @@ class QuestionController extends Controller
             return view('questions.list', compact('quiz'));
         }
 
-        return redirect()->route('login')->with('error', 'You need to log in first.');
+        return redirect()->route('login');
     }
 
 
 
     public function results(Request $request)
     {
-        // Retrieve quiz questions from session
         $quizQuestions = session('quiz_questions', []);
 
         if (empty($quizQuestions)) {
@@ -74,7 +70,7 @@ class QuestionController extends Controller
         // Store quiz as completed
         session()->forget('quiz_questions');
 
-        // Initialize results tracking
+        // Initialize results tracking (associative array)
         $results = [
             'overall' => 0,
             'art' => 0,
@@ -85,28 +81,23 @@ class QuestionController extends Controller
         ];
         $xp = 0;
 
-        // Get user instance
         $user = Auth::user();
 
-        // Process submitted answers
         foreach ($quizQuestions as $question) {
             $questionId = $question['id'];
             $category = strtolower($question['category']); // Ensure lowercase to match array keys
 
-            // Check if user submitted an answer for this question
             if ($request->has("answer_$questionId")) {
                 $selectedAnswerId = $request->input("answer_$questionId");
 
-                // Find the correct answer for this question
                 $correctAnswer = Answer::where('question_id', $questionId)
                     ->where('correct', 1)
                     ->first();
 
                 if ($correctAnswer && $correctAnswer->id == $selectedAnswerId) {
-                    // Correct answer
                     $results['overall']++;
                     $results[$category]++;
-                    $xp += $question['xp']; // Add XP if correct
+                    $xp += $question['xp'];
                 }
             }
         }
@@ -117,14 +108,11 @@ class QuestionController extends Controller
             if ($category !== 'overall') {
                 [$correct, $total] = explode("/", $user[$category] ?? "0/0");
 
-                // Update with new values
                 $user[$category] = ($correct + $correctAnswers) . "/" . ($total + 4);
             }
         }
-        // Save user updates
         $user->save();
 
-        // Return results to the view
         return view('questions.results', ['results' => $results, 'xp' => $xp]);
     }
 }
