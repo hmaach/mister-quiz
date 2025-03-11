@@ -11,7 +11,7 @@
     @foreach ($question['answers'] as $answer)
         <div class="answer">
             <label>
-                <input type="radio" name="answer_{{ $question['id'] }}" value="{{ $answer['id'] }}">
+                <input type="radio" name="answer_{{ $question['id'] }}" value="{{ $answer['id'] }}" required>
                 {{ $answer['answer'] }}
             </label>
         </div>

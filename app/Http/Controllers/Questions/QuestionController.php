@@ -80,7 +80,7 @@ class QuestionController extends Controller
             'sports' => 0
         ];
         $xp = 0;
-
+        $counter  = 0;
         $user = Auth::user();
 
         foreach ($quizQuestions as $question) {
@@ -93,13 +93,17 @@ class QuestionController extends Controller
                 $correctAnswer = Answer::where('question_id', $questionId)
                     ->where('correct', 1)
                     ->first();
-
+                $counter += 1;
                 if ($correctAnswer && $correctAnswer->id == $selectedAnswerId) {
                     $results['overall']++;
                     $results[$category]++;
                     $xp += $question['xp'];
                 }
             }
+        }
+
+        if ($counter !== 20) {
+            return redirect()->route('quiz')->with('error', 'You need to answer all questions');
         }
 
         $user->xp += $xp;
